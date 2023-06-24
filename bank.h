@@ -45,6 +45,8 @@ Node* searchNodeByEmail(Node* node, char email[]);
 Node* check_email_exists(Node* node, char email[]);
 Node* searchNodeById(Node* node, int id);
 Node* check_id_exists(Node* node, int id);
+Node* searchNodeByNRC(Node* node, char nrc[]);
+Node* check_nrc_exists(Node* node, char nrc[]);
 void write_data_to_file(Node* node, FILE *fptr);
 void recording_all_data_to_file(Node* node);
 void loading_all_data_from_file();
@@ -301,6 +303,29 @@ Node* searchNodeById(Node* node, int id)
 Node* check_id_exists(Node* node, int id)
 {
     Node* resultNode = searchNodeById(node, id);
+    if(resultNode != NULL){
+        return resultNode;
+    }else{
+        return NULL;
+    }
+}
+
+Node* searchNodeByNRC(Node* node, char nrc[])
+{
+    if(node == NULL || string_compare(node->data.nrc, nrc) == 0){
+        return node;
+    }
+
+    if(string_compare(node->data.nrc, nrc) > 0){
+        return searchNodeByNRC(node->left, nrc);
+    }else{
+        return searchNodeByNRC(node->right, nrc);
+    }
+}
+
+Node* check_nrc_exists(Node* node, char nrc[])
+{
+    Node* resultNode = searchNodeByNRC(node, nrc);
     if(resultNode != NULL){
         return resultNode;
     }else{
