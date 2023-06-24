@@ -198,12 +198,19 @@ void register_sector()
                     printf("Weak password! Password must contains upper case, lower case, number, special character!\n");
                 }
             }
+
             while(!is_NRC_valid(r_nrc)){
                 printf("Enter your nrc to register : ");
                 scanf(" %[^\n]", r_nrc);
-                if(!is_NRC_valid(r_nrc)){
-                    printf("Invalid Format! Only support Yangon NRC!\n");
+                if(check_nrc_exists(root, r_nrc) == NULL){
+                    if(!is_NRC_valid(r_nrc)){
+                        printf("Invalid Format! Only support Yangon NRC!\n");
+                    }
+                }else{
+                    string_copy(r_nrc, "random");
+                    printf("NRC already exists! Try again!\n");
                 }
+                
             }
 
             while(!is_accountType_valid(r_accountType)){
